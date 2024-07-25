@@ -54,7 +54,7 @@
             @foreach ($subjects as $subject)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $subject->course->course_id}}</td>
+                    <td>{{ $subject->course->course_name}}</td>
                     <td>{{ $subject->subject_name}}</td>
                     <td>{{ $subject->subject_code}}</td>
                     <td><button>View</button></td>

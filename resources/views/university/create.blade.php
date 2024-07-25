@@ -27,25 +27,27 @@
 
 @section('content')
 
-<div class="h1 m-2">
-    <h1>Create University</h1>
-</div>
+    <div class="h1 m-2">
+        <h1>Create University</h1>
+    </div>
 
 
     <div class="container">
 
-        <form action="{{route('university.store')}}" method="post">
+        <form action="{{ route('university.store') }}" method="post">
             @csrf
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">University Name</label>
                 <input type="text" class="form-control" name="university_name" id="exampleFormControlInput1"
                     placeholder="University Name">
             </div>
-
+            @error('university_name')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
             <button class="btn btn-primary"> Submit University</button>
 
             <div class="back mt-4">
-                <a href="{{route('university.index')}}"> View University List </a>
+                <a href="{{ route('university.index') }}"> View University List </a>
             </div>
         </form>
 

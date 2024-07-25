@@ -32,7 +32,7 @@ class UniversityController extends Controller
     {
 
         $validate = $request->validate([
-            'university_name' => 'required|string|max:25'
+            'university_name' => 'required|string|max:25|unique:universities,university_name'
         ]);
 
         $university = University::create([

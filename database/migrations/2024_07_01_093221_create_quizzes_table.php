@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('quiz_name')->nullable();
-            $table->string('question')->nullable();
+            $table->unsignedBigInteger('subject_id')->nullable();
+            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->json('question')->nullable();
             $table->string('correct_ans')->nullable();
             $table->string('reason')->nullable();
             $table->timestamps();

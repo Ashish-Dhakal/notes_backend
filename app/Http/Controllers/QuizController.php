@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
@@ -12,7 +13,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        $data['quizzes'] = Quiz::get();
+        return view('quiz.index', $data);
     }
 
     /**
@@ -20,7 +22,8 @@ class QuizController extends Controller
      */
     public function create()
     {
-        //
+        $data['subjects'] = Subject::get();
+        return view('quiz.create',$data);
     }
 
     /**
@@ -28,7 +31,32 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'subject_id' => 'required',
+            'question-1' => 'required',
+            'question-2' => 'required',
+            'question-3' => 'required',
+            'question-4' => 'required',
+            'correct_ans' => 'required|max:20',
+            'reason' => 'required|max:20',
+        ]);
+
+        $question_collection=[
+            'question-1' => $validate['question-1'],
+            'question-2' => $validate['question-2'],
+            'question-3' => $validate['question-3'],
+            'question-4' => $validate['question-4']
+        ];
+
+        $quiz = Quiz::create([
+            'subject_id' =>  $validate['subject_id'],
+            'question' => json_encode($question_collection),
+            'correct_ans' =>  $validate['correct_ans'],
+            'reason' =>  $validate['reason'],
+        ]);
+
+
+        return redirect()->route('quiz.index')->with('success' , 'Quiz Created');
     }
 
     /**
