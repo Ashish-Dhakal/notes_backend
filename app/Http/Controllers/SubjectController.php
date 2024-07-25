@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $data['subjects'] = Subject::get();
+        $data['courses'] = Course::get();
+        return view('subject.index', $data);
     }
 
     /**
@@ -20,7 +23,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        $data['courses'] = Course::get();
+        return view('subject.create',$data);
     }
 
     /**
@@ -28,7 +32,20 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'course_id' => 'required',
+            'subject_name' => 'required',
+            'subject_code' => 'required|unique:subjects,subject_code',
+        ]);
+
+        $subject = Subject::create([
+            'course_id' =>  $validate['course_id'],
+            'subject_name' =>  $validate['subject_name'],
+            'subject_code' =>  $validate['subject_code'],
+        ]);
+
+        return redirect()->route('subject.index')->with('success' , 'Subject Created');
+    
     }
 
     /**

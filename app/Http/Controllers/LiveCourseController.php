@@ -12,7 +12,8 @@ class LiveCourseController extends Controller
      */
     public function index()
     {
-        //
+        $data['liveCourse'] = LiveCourse::get();
+        return view('live-course.index', $data);
     }
 
     /**
@@ -20,7 +21,7 @@ class LiveCourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('live-course.create');
     }
 
     /**
@@ -28,7 +29,24 @@ class LiveCourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'link' => 'required',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $input = $request->all();
+    
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
+    
+        LiveCourse::create($input);
+    
+        return redirect()->route('liveCourse.index')->with('success', 'Free Course created successfully.');
     }
 
     /**

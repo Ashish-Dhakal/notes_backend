@@ -28,6 +28,45 @@
 @section('content')
 
 
+
+<div class="container">
+    <h1>Free Course list</h1>
+
+    <h4> <a href="{{ route('freeCourse.create') }}" style="text-decoration: none;
+    float:right; ">Add Free Course</a>
+    </h4>
+
+
+    <table class="table table-bordered" style="width:75%">
+        <thead>
+            <tr>
+                <th scope="col">SN.</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Mentor</th>
+                <th scope="col">Course Link</th>
+                <th scope="col">Course Image</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach ($freeCourse as $free)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $free->course_name}}</td>
+                    <td>{{ $free->course_by}}</td>
+                    <td>{{ $free->course_link}}</td>
+                    <td> <img src="/images/{{ $free->course_image}}" width="100px" alt="">  </td>
+                    <td><button>View</button></td>
+                </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+</div>
+
+
+
 @endsection
 
 {{-- page content section ends --}}

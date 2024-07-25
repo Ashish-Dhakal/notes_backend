@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\University;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -12,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $data['courses'] = Course::with('university')->get();
+        return view('course.index', $data);
     }
 
     /**
@@ -20,7 +22,10 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+ 
+        $data['universities'] = University::get();
+
+        return view('course.create',$data);
     }
 
     /**
@@ -28,7 +33,18 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validate = $request->validate([
+            'university_id' => 'required',
+            'course_name' => 'required|string|max:30|unique:courses,course_name'
+        ]);
+
+        $university = Course::create([
+            'university_id' =>  $validate['university_id'],
+            'course_name' => $validate['course_name']
+        ]);
+
+        return redirect()->route('course.index')->with('success' , 'University Created');
     }
 
     /**

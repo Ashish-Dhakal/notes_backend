@@ -12,7 +12,8 @@ class UniversityController extends Controller
      */
     public function index()
     {
-        //
+        $data['university'] = University::get();
+        return view('university.index',$data);
     }
 
     /**
@@ -20,15 +21,25 @@ class UniversityController extends Controller
      */
     public function create()
     {
-        //
+        return view('university.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        //
+
+        $validate = $request->validate([
+            'university_name' => 'required|string|max:25'
+        ]);
+
+        $university = University::create([
+            'university_name' =>  $validate['university_name'],
+        ]);
+
+        return redirect()->route('university.index')->with('success' , 'University Created');
     }
 
     /**

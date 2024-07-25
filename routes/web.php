@@ -14,6 +14,7 @@ Route::get('/', function () {
 });
 
 
+
 Route::resource('university' , UniversityController::class);
 Route::resource('course' , CourseController::class );
 Route::resource('liveCourse' , LiveCourseController::class);

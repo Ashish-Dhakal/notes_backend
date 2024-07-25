@@ -12,7 +12,8 @@ class FreeCourseController extends Controller
      */
     public function index()
     {
-        //
+        $data['freeCourse'] = FreeCourse::get();
+        return view('free-course.index', $data);
     }
 
     /**
@@ -20,7 +21,7 @@ class FreeCourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('free-course.create');
     }
 
     /**
@@ -28,8 +29,27 @@ class FreeCourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'course_name' => 'required',
+            'course_by' => 'required',
+            'course_link' => 'required',
+            'course_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $input = $request->all();
+    
+        if ($course_image = $request->file('course_image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $course_image->getClientOriginalExtension();
+            $course_image->move($destinationPath, $profileImage);
+            $input['course_image'] = "$profileImage";
+        }
+    
+        FreeCourse::create($input);
+    
+        return redirect()->route('freeCourse.index')->with('success', 'Free Course created successfully.');
     }
+    
 
     /**
      * Display the specified resource.
