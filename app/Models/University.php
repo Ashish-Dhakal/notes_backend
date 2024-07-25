@@ -10,4 +10,10 @@ class University extends Model
     use HasFactory;
     
     protected $guarded = []; 
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
 }

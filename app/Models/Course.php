@@ -16,5 +16,6 @@ class Course extends Model
     {
         return $this->belongsTo(University::class , 'university_id');
     }
+
 }
  

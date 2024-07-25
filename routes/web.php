@@ -6,7 +6,6 @@ use App\Http\Controllers\LiveCourseController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UniversityController;
-use App\Models\University;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
