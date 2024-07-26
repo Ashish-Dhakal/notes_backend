@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\University;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -31,21 +32,36 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
     public function store(Request $request)
-    {
-        // dd($request);
-        $validate = $request->validate([
-            'university_id' => 'required',
-            'course_name' => 'required|string|max:30|unique:courses,course_name'
-        ]);
+{
+    $request->validate([
+        'university_id' => 'required|integer',
+        'course_name' => [
+            'required',
+            'string',
+            'max:30',
+            function ($attribute, $value, $fail) use ($request) {
+                $exists = Course::where('course_name', $value)
+                                ->where('university_id', $request->input('university_id'))
+                                ->exists();
+                if ($exists) {
+                    $fail('The course name has already been taken for this university.');
+                }
+            },
+        ],
+    ]);
 
-        $university = Course::create([
-            'university_id' =>  $validate['university_id'],
-            'course_name' => $validate['course_name']
-        ]);
+    // Create a new course record
+    $course = Course::create([
+        'university_id' => $request->input('university_id'),
+        'course_name' => $request->input('course_name'),
+    ]);
 
-        return redirect()->route('course.index')->with('success' , 'University Created');
-    }
+    return redirect()->route('course.index')->with('success', 'Course Created');
+}
+
 
     /**
      * Display the specified resource.

@@ -34,7 +34,7 @@
         @csrf
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Course Name</label>
-            <input type="text" class="form-control" name="course_name" id="exampleFormControlInput1"
+            <input type="text" class="form-control" value="{{old('course_name')}}" name="course_name" id="exampleFormControlInput1"
                 placeholder="Course Name">
             @error('course_name')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -43,7 +43,7 @@
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Course Mentor</label>
-            <input type="text" class="form-control" name="course_by" id="exampleFormControlInput1"
+            <input type="text" class="form-control" value="{{old('course_by')}}" name="course_by" id="exampleFormControlInput1"
                 placeholder="Course mentor">
             @error('course_by')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -51,7 +51,7 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Course Link</label>
-            <input type="text" class="form-control" name="course_link" id="exampleFormControlInput1"
+            <input type="text" class="form-control" value="{{old('course_link')}}" name="course_link" id="exampleFormControlInput1"
                 placeholder="Course Link">
             @error('course_link')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -59,9 +59,9 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Course Image</label>
-            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
+            <input type="file" name="course_image" class="form-control"
                 id="inputImage">
-            @error('image')
+            @error('course_image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

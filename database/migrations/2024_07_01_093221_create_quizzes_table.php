@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('subject_id')->nullable();
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->json('question')->nullable();
+            $table->string('question');
+            $table->json('options')->nullable();
             $table->string('correct_ans')->nullable();
             $table->string('reason')->nullable();
             $table->timestamps();

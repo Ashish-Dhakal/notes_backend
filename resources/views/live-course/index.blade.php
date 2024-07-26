@@ -31,10 +31,10 @@
 
 
 <div class="container">
-    <h1>Free Course list</h1>
+    <h1>Free Live List</h1>
 
     <h4> <a href="{{ route('liveCourse.create') }}" style="text-decoration: none;
-    float:right; ">Add Free Course</a>
+    float:right; ">Add Live Course</a>
     </h4>
 
 

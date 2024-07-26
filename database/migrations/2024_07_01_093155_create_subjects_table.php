@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('university_id')->nullable();
+            $table->foreign('university_id')->references('id')->on('universities');
             $table->unsignedBigInteger('course_id')->nullable();
             $table->foreign('course_id')->references('id')->on('courses');
             $table->string('subject_name')->nullable();
             $table->string('subject_code')->nullable();
+            $table->string('file_path')->nullable(); 
             $table->timestamps();
         });
     }

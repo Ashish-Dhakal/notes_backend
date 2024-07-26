@@ -30,7 +30,7 @@
 
 
 
-<h1>Create Free Course</h1>
+<h1>Create Live Course</h1>
 
 <form action="{{ route('liveCourse.store') }}" method="post" enctype="multipart/form-data">
     @csrf
@@ -53,7 +53,7 @@
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Course Image</label>
-        <input type="file" name="course_image" class="form-control @error('image') is-invalid @enderror"
+        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
             id="inputImage">
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
@@ -63,7 +63,7 @@
     <button class="btn btn-primary"> Submit Course</button>
 
     <div class="back mt-4">
-        <a href="{{ route('liveCourse.index') }}"> View Course List </a>
+        <a href="{{ route('liveCourse.index') }}"> View Live Course List </a>
     </div>
 </form>
 

@@ -15,8 +15,15 @@ Route::get('/', function () {
 
 
 Route::resource('university' , UniversityController::class);
+Route::get('/universities/{university}/courses', [UniversityController::class, 'getCourses']);
+
 Route::resource('course' , CourseController::class );
+
 Route::resource('liveCourse' , LiveCourseController::class);
+
 Route::resource('quiz' , QuizController::class);
+
 Route::resource('subject' , SubjectController::class);
+
 Route::resource('freeCourse' , FreeCourseController::class);
+

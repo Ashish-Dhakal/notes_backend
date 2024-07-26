@@ -13,9 +13,19 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $data['quizzes'] = Quiz::get();
+        $subjects = Subject::get();
+        $quizzes = Quiz::with('subject')->get();
+    
+        foreach ($quizzes as $quiz) {
+            $quiz->options = json_decode($quiz->options, true);
+        }
+    
+        $data['subjects'] = $subjects;
+        $data['quizzes'] = $quizzes;
+    
         return view('quiz.index', $data);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -33,25 +43,27 @@ class QuizController extends Controller
     {
         $validate = $request->validate([
             'subject_id' => 'required',
-            'question-1' => 'required',
-            'question-2' => 'required',
-            'question-3' => 'required',
-            'question-4' => 'required',
+            'option-1' => 'required',
+            'option-2' => 'required',
+            'option-3' => 'required',
+            'option-4' => 'required',
             'correct_ans' => 'required|max:20',
             'reason' => 'required|max:20',
+            'question'=>'required|max:20'
         ]);
 
-        $question_collection=[
-            'question-1' => $validate['question-1'],
-            'question-2' => $validate['question-2'],
-            'question-3' => $validate['question-3'],
-            'question-4' => $validate['question-4']
+        $option_collection=[
+            'option-1' => $validate['option-1'],
+            'option-2' => $validate['option-2'],
+            'option-3' => $validate['option-3'],
+            'option-4' => $validate['option-4']
         ];
 
         $quiz = Quiz::create([
             'subject_id' =>  $validate['subject_id'],
-            'question' => json_encode($question_collection),
+            'options' => json_encode($option_collection),
             'correct_ans' =>  $validate['correct_ans'],
+            'question' =>  $validate['question'],
             'reason' =>  $validate['reason'],
         ]);
 

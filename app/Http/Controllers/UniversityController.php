@@ -24,6 +24,12 @@ class UniversityController extends Controller
         return view('university.create');
     }
 
+    public function getCourses($universityId)
+    {
+        $courses = University::find($universityId)->courses;
+        return response()->json($courses);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
